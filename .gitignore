@@ -2,3 +2,7 @@ target/
 project/target
 project/project/target
 .bsp
+/.env
+/.idea/
+/tmp/output.csv
+/tmp/output.json
