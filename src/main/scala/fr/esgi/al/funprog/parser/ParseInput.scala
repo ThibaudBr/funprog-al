@@ -18,7 +18,9 @@ object ParseInput {
             }
           } catch {
             case _: Throwable =>
-              throw new DonneesIncorectesException("Given size is not a number")
+              throw new DonneesIncorectesException(
+                "Given size is not a number or negative value"
+              )
           }
         case _ => throw new DonneesIncorectesException("Invalid limit input")
       }
@@ -49,7 +51,7 @@ object ParseInput {
             } catch {
               case _: Throwable =>
                 throw new DonneesIncorectesException(
-                  "Given position is not a number"
+                  "Error with given Position"
                 )
             }
           case _ =>
@@ -68,7 +70,9 @@ object ParseInput {
     case line :: Nil =>
       line.toList.map { c: Char =>
         if (!List('G', 'D', 'A').contains(c)) {
-          throw new Exception(s"Invalid character for order: ${c.toString}")
+          throw new DonneesIncorectesException(
+            s"Invalid character for order: ${c.toString}"
+          )
         } else {
           Order(c)
         }

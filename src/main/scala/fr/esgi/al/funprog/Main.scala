@@ -15,6 +15,7 @@ object Main extends App {
   val outputJsonFileName: String =
     conf.getString("application.output-json-file")
   val outputCsvFileName: String = conf.getString("application.output-csv-file")
+  val outputYmlFileName: String = conf.getString("application.output-yml-file")
 
   val inputFile = File(inputFileName)
   val dataInputFile = inputFile.lines.toList

@@ -5,14 +5,14 @@ case class Direction(direction: Char) {
     case 'N' | 'S' | 'E' | 'W' =>
   }
 
-  def rotateLeft(): Direction = direction match {
+  def rotateRight(): Direction = direction match {
     case 'N' => Direction('E')
     case 'E' => Direction('S')
     case 'S' => Direction('W')
     case 'W' => Direction('N')
   }
 
-  def rotateRight(): Direction = direction match {
+  def rotateLeft(): Direction = direction match {
     case 'N' => Direction('W')
     case 'W' => Direction('S')
     case 'S' => Direction('E')

@@ -1,7 +1,6 @@
 package fr.esgi.al.funprog.parser
 
 import fr.esgi.al.funprog.models.LawnMower
-
 object ParseOutput {
 
   def parseJsonToCsv(lawnMowers: List[LawnMower]): String =
