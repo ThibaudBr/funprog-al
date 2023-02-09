@@ -17,34 +17,35 @@ import java.nio.file.{Files, Paths}
 object Main extends App {
   val conf: Config = ConfigFactory.load()
 
-  val inputFileName: String = conf.getString("application.input-file")
-  val outputJsonFileName: String =
+  private val inputFileName: String = conf.getString("application.input-file")
+  private val outputJsonFileName: String =
     conf.getString("application.output-json-file")
-  val outputCsvFileName: String = conf.getString("application.output-csv-file")
+  private val outputCsvFileName: String =
+    conf.getString("application.output-csv-file")
   val outputYmlFileName: String = conf.getString("application.output-yml-file")
 
-  val inputFile = File(inputFileName)
-  val dataInputFile = inputFile.lines.toList
+  private val inputFile = File(inputFileName)
+  private val dataInputFile = inputFile.lines.toList
 
   val limit: Coordinates =
     ParseInput.parseLimit(dataInputFile.take(1)).getOrElse(Coordinates(0, 0))
 
-  val position1: Position =
+  private val position1: Position =
     ParseInput
       .parsePosition(limit, dataInputFile.slice(1, 2))
       .getOrElse(
         Position(Coordinates(0, 0), Direction('Z'))
       )
-  val order1: List[Order] =
+  private val order1: List[Order] =
     ParseInput.parseOrders(dataInputFile.slice(2, 3)).getOrElse(List.empty)
 
-  val position2: Position =
+  private val position2: Position =
     ParseInput
       .parsePosition(limit, dataInputFile.slice(3, 4))
       .getOrElse(
         Position(Coordinates(0, 0), Direction('Z'))
       )
-  val order2: List[Order] = ParseInput
+  private val order2: List[Order] = ParseInput
     .parseOrders(dataInputFile.slice(4, 5))
     .getOrElse(
       List.empty
@@ -57,12 +58,12 @@ object Main extends App {
 
   val runner: Runner = Runner(limit, lawnMowers).run()
 
-  val outputJsonPath = Files.write(
+  private val outputJsonPath = Files.write(
     Paths.get(outputJsonFileName),
     runner.toJson.toString().getBytes(StandardCharsets.UTF_8)
   )
 
-  val outputCsvPath = Files.write(
+  private val outputCsvPath = Files.write(
     Paths.get(outputCsvFileName),
     ParseOutput
       .parseJsonToCsv(runner.lawnMowerList)
