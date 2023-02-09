@@ -3,81 +3,94 @@ package fr.esgi.al.funprog.parser
 import fr.esgi.al.funprog.exceptions.DonneesIncorectesException
 import fr.esgi.al.funprog.models.{Coordinates, Direction, Order, Position}
 
-@SuppressWarnings(Array("org.wartremover.warts.Throw"))
+import scala.util.{Failure, Success, Try}
+
 object ParseInput {
 
-  def parseLimit(input: List[String]): Coordinates = input match {
+  def parseLimit(input: List[String]): Try[Coordinates] = input match {
     case line :: Nil =>
       line.split(" ").toList match {
         case limitX :: limitY :: Nil =>
-          try {
-            if (limitX.toInt < 0 || limitY.toInt < 0) {
-              throw new DonneesIncorectesException("Given size is negative")
-            } else {
-              Coordinates(limitX.toInt, limitY.toInt)
-            }
-          } catch {
-            case _: Throwable =>
-              throw new DonneesIncorectesException(
-                "Given size is not a number or negative value"
-              )
-          }
-        case _ => throw new DonneesIncorectesException("Invalid limit input")
+          Try(limitX.toInt).flatMap(
+            x =>
+              Try(limitY.toInt)
+                .map(
+                  y =>
+                    if (!(x < 0) && !(y < 0)) {
+                      Success(Coordinates(x, y))
+                    } else {
+                      Failure(
+                        DonneesIncorectesException("Given size is negative")
+                      )
+                    }
+                )
+                .flatMap(identity)
+          )
+        case _ => Failure(DonneesIncorectesException("Invalid limit input"))
       }
-    case _ => throw new DonneesIncorectesException("Invalid limit input")
+    case _ => Failure(DonneesIncorectesException("Invalid limit input"))
   }
 
-  def parsePosition(limit: Coordinates, input: List[String]): Position =
+  def parsePosition(limit: Coordinates, input: List[String]): Try[Position] = {
     input match {
       case line :: Nil =>
         line.split(" ").toList match {
           case x :: y :: direction :: Nil =>
             try {
               if (x.toInt > limit.x || y.toInt > limit.y || x.toInt < 0 || y.toInt < 0) {
-                throw new DonneesIncorectesException(
-                  "Given position is out of the limit"
+                Failure(
+                  DonneesIncorectesException(
+                    "Given position is out of the limit"
+                  )
                 )
               } else if (!(direction.nonEmpty && List("N", "S", "E", "W")
                            .contains(direction.charAt(0).toString))) {
-                throw new DonneesIncorectesException(
-                  "Given direction is not valid"
+                Failure(
+                  DonneesIncorectesException("Given direction is not valid")
                 )
               } else {
-                Position(
-                  Coordinates(x.toInt, y.toInt),
-                  Direction(direction.charAt(0))
+                Success(
+                  Position(
+                    Coordinates(x.toInt, y.toInt),
+                    Direction(direction.charAt(0))
+                  )
                 )
               }
             } catch {
-              case _: Throwable =>
-                throw new DonneesIncorectesException(
-                  "Error with given Position"
+              case _: NumberFormatException =>
+                Failure(
+                  DonneesIncorectesException("Invalid number for position")
                 )
             }
+
           case _ =>
-            throw new DonneesIncorectesException("Invalid position input")
+            Failure(DonneesIncorectesException("Invalid position input"))
         }
-      case _ => {
-        println(input)
-        throw new DonneesIncorectesException(
-          "Invalid input for position"
-        )
-      }
-
+      case _ =>
+        Failure(DonneesIncorectesException("Invalid input for position"))
     }
+  }
 
-  def parseOrders(input: List[String]): List[Order] = input match {
+  def parseOrders(input: List[String]): Try[List[Order]] = input match {
     case line :: Nil =>
-      line.toList.map { c: Char =>
-        if (!List('G', 'D', 'A').contains(c)) {
-          throw new DonneesIncorectesException(
-            s"Invalid character for order: ${c.toString}"
-          )
-        } else {
-          Order(c)
+      Try[List[Order]] {
+        line.toList.map { c: Char =>
+          if (!List('G', 'D', 'A').contains(c)) {
+            Failure(DonneesIncorectesException("Invalid order"))
+              .getOrElse(Order('Z'))
+          } else {
+            Order(c)
+          }
         }
+      } match {
+        case Success(orders) =>
+          Success(orders.collect { case order: Order => order }.toList)
+        case Failure(e) =>
+          Failure(
+            DonneesIncorectesException(s"Invalid orders input: ${e.getMessage}")
+          )
       }
-    case _ => throw new DonneesIncorectesException("Invalid orders input")
+    case _ => Failure(DonneesIncorectesException("Invalid orders input"))
   }
 
 }

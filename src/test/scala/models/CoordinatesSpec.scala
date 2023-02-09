@@ -4,7 +4,7 @@ import fr.esgi.al.funprog.models.{Coordinates, Direction}
 import org.scalatest.funspec.AnyFunSpec
 
 class CoordinatesSpec extends AnyFunSpec {
-  describe("Coordiantes") {
+  describe("Coordinates") {
     it("should be initialized with x and y") {
       val coords = Coordinates(1, 2)
 
