@@ -3,6 +3,8 @@ package fr.esgi.al.funprog
 import fr.esgi.al.funprog.models.{Coordinates, LawnMower, Order}
 import play.api.libs.json._
 
+import scala.annotation.tailrec
+
 final case class Runner(limit: Coordinates, lawnMowerList: List[LawnMower]) {
 
   def run(): Runner = {
@@ -15,47 +17,29 @@ final case class Runner(limit: Coordinates, lawnMowerList: List[LawnMower]) {
       case _                          => lawnMower
     }
 
+  @tailrec
   private def __forLoop(lawnMower: LawnMower, orders: List[Order]): LawnMower =
     orders match {
       case Nil           => lawnMower
       case order :: tail => __forLoop(followOrder(order, lawnMower), tail)
+      case _             => lawnMower
     }
 
   def followOrder(order: Order, lawnMower: LawnMower): LawnMower = {
     order.order match {
-      case 'A' => moveForward(lawnMower)
+      case 'A' => moveForward(lawnMower, limit)
       case 'D' => rotateRight(lawnMower)
       case 'G' => rotateLeft(lawnMower)
+      case _   => lawnMower
     }
   }
 
-  def moveForward(lawnMower: LawnMower): LawnMower =
-    lawnMower.currentPosition.direction.direction match {
-      case 'N' =>
-        LawnMower(
-          lawnMower.startingPosition,
-          lawnMower.currentPosition.move(),
-          lawnMower.orders
-        )
-      case 'S' =>
-        LawnMower(
-          lawnMower.startingPosition,
-          lawnMower.currentPosition.move(),
-          lawnMower.orders
-        )
-      case 'E' =>
-        LawnMower(
-          lawnMower.startingPosition,
-          lawnMower.currentPosition.move(),
-          lawnMower.orders
-        )
-      case 'W' =>
-        LawnMower(
-          lawnMower.startingPosition,
-          lawnMower.currentPosition.move(),
-          lawnMower.orders
-        )
-    }
+  def moveForward(lawnMower: LawnMower, limit: Coordinates): LawnMower =
+    LawnMower(
+      lawnMower.startingPosition,
+      lawnMower.currentPosition.move(limit),
+      lawnMower.orders
+    )
 
   def rotateRight(mower: LawnMower): LawnMower = {
     LawnMower(

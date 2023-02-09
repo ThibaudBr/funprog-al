@@ -16,7 +16,8 @@ class PositionSpec extends AnyFunSpec {
 
     it("should move forward from North") {
       val position = Position(Coordinates(1, 2), Direction('N'))
-      val newPosition = position.move()
+      val limit = Coordinates(5, 5)
+      val newPosition = position.move(limit)
 
       assert(newPosition.coordinates.x == 1)
       assert(newPosition.coordinates.y == 3)
@@ -25,7 +26,8 @@ class PositionSpec extends AnyFunSpec {
 
     it("should move forward from South") {
       val position = Position(Coordinates(1, 2), Direction('S'))
-      val newPosition = position.move()
+      val limit = Coordinates(5, 5)
+      val newPosition = position.move(limit)
 
       assert(newPosition.coordinates.x == 1)
       assert(newPosition.coordinates.y == 1)
@@ -34,7 +36,8 @@ class PositionSpec extends AnyFunSpec {
 
     it("should move forward from East") {
       val position = Position(Coordinates(1, 2), Direction('E'))
-      val newPosition = position.move()
+      val limit = Coordinates(5, 5)
+      val newPosition = position.move(limit)
 
       assert(newPosition.coordinates.x == 2)
       assert(newPosition.coordinates.y == 2)
@@ -43,7 +46,8 @@ class PositionSpec extends AnyFunSpec {
 
     it("should move forward from West") {
       val position = Position(Coordinates(1, 2), Direction('W'))
-      val newPosition = position.move()
+      val limit = Coordinates(5, 5)
+      val newPosition = position.move(limit)
 
       assert(newPosition.coordinates.x == 0)
       assert(newPosition.coordinates.y == 2)

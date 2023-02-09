@@ -29,7 +29,9 @@ class ParserInputSpec extends AnyFunSpec {
         val exception = intercept[DonneesIncorectesException] {
           ParseInput.parseLimit(List(input))
         }
-        assert(exception.getMessage == "Given size is not a number or negative value")
+        assert(
+          exception.getMessage == "Given size is not a number or negative value"
+        )
       }
 
       it("should throw an DonneesIncorrectException if input negative") {
@@ -37,7 +39,9 @@ class ParserInputSpec extends AnyFunSpec {
         val exception = intercept[DonneesIncorectesException] {
           ParseInput.parseLimit(List(input))
         }
-        assert(exception.getMessage == "Given size is not a number or negative value")
+        assert(
+          exception.getMessage == "Given size is not a number or negative value"
+        )
       }
     }
 
@@ -115,7 +119,9 @@ class ParserInputSpec extends AnyFunSpec {
         assert(exception.getMessage == "Invalid character for order: V")
       }
 
-      it("should throw an DonneesIncorrectException if input data contain space") {
+      it(
+        "should throw an DonneesIncorrectException if input data contain space"
+      ) {
         val input = "AAGAGAGAA AAGAGAGAA"
         val exception = intercept[DonneesIncorectesException] {
           ParseInput.parseOrders(List(input))

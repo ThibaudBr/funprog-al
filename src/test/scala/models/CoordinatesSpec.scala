@@ -14,7 +14,8 @@ class CoordinatesSpec extends AnyFunSpec {
 
     it("should move north") {
       val coords = Coordinates(1, 2)
-      val newCoords = coords.move(Direction('N'))
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('N'), limit)
 
       assert(newCoords.x == 1)
       assert(newCoords.y == 3)
@@ -22,7 +23,8 @@ class CoordinatesSpec extends AnyFunSpec {
 
     it("should move south") {
       val coords = Coordinates(1, 2)
-      val newCoords = coords.move(Direction('S'))
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('S'), limit)
 
       assert(newCoords.x == 1)
       assert(newCoords.y == 1)
@@ -30,7 +32,8 @@ class CoordinatesSpec extends AnyFunSpec {
 
     it("should move east") {
       val coords = Coordinates(1, 2)
-      val newCoords = coords.move(Direction('E'))
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('E'), limit)
 
       assert(newCoords.x == 2)
       assert(newCoords.y == 2)
@@ -38,7 +41,8 @@ class CoordinatesSpec extends AnyFunSpec {
 
     it("should move west") {
       val coords = Coordinates(1, 2)
-      val newCoords = coords.move(Direction('W'))
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('W'), limit)
 
       assert(newCoords.x == 0)
       assert(newCoords.y == 2)
@@ -46,9 +50,55 @@ class CoordinatesSpec extends AnyFunSpec {
 
     it("should be transform to Json") {
       val coords = Coordinates(1, 2)
+
       val json = coords.toJson
 
       assert(json.toString == """{"x":1,"y":2}""")
+    }
+
+    it("should not move north if it's at the limit") {
+      val coords = Coordinates(1, 5)
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('N'), limit)
+
+      assert(newCoords.x == 1)
+      assert(newCoords.y == 5)
+    }
+
+    it("should not move south if it's at the limit") {
+      val coords = Coordinates(1, 0)
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('S'), limit)
+
+      assert(newCoords.x == 1)
+      assert(newCoords.y == 0)
+    }
+
+    it("should not move east if it's at the limit") {
+      val coords = Coordinates(5, 2)
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('E'), limit)
+
+      assert(newCoords.x == 5)
+      assert(newCoords.y == 2)
+    }
+
+    it("should not move west if it's at the limit") {
+      val coords = Coordinates(0, 2)
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('W'), limit)
+
+      assert(newCoords.x == 0)
+      assert(newCoords.y == 2)
+    }
+
+    it("should not move if it's at the limit") {
+      val coords = Coordinates(0, 0)
+      val limit = Coordinates(5, 5)
+      val newCoords = coords.move(Direction('W'), limit)
+
+      assert(newCoords.x == 0)
+      assert(newCoords.y == 0)
     }
   }
 }
