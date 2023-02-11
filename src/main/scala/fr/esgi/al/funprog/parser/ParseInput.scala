@@ -76,8 +76,9 @@ object ParseInput {
       Try[List[Order]] {
         line.toList.map { c: Char =>
           if (!List('G', 'D', 'A').contains(c)) {
-            Failure(DonneesIncorectesException("Invalid order"))
-              .getOrElse(Order('Z'))
+            Failure(
+              DonneesIncorectesException(s"Invalid order for ${c.toString}")
+            ).getOrElse(Order('Z'))
           } else {
             Order(c)
           }
