@@ -1,0 +1,28 @@
+2023-02-11T11:30:33.662396923: [Error] Invalid number for position 
+2023-02-11T11:30:33.664229149: [Error] Given direction is not valid 
+2023-02-11T11:30:33.664502267: [Error] Invalid order 
+2023-02-11T11:30:33.665213552: [Error] Invalid orders input: Z (of class java.lang.Character) 
+2023-02-11T11:30:33.665452991: [Error] Invalid order 
+2023-02-11T11:30:33.665562465: [Error] Invalid orders input: Z (of class java.lang.Character) 
+2023-02-11T11:30:36.066654693: [Error] Invalid limit input 
+2023-02-11T11:30:36.068579586: [Error] Given size is negative 
+2023-02-11T11:30:36.069819727: [Error] Invalid position input 
+2023-02-11T11:30:36.070370713: [Error] Invalid number for position 
+2023-02-11T11:30:36.070863034: [Error] Given position is out of the limit 
+2023-02-11T11:30:36.071377418: [Error] Given position is out of the limit 
+2023-02-11T11:30:36.071866882: [Error] Given direction is not valid 
+2023-02-11T11:30:36.073354059: [Error] Invalid order 
+2023-02-11T11:30:36.073618769: [Error] Invalid orders input: Z (of class java.lang.Character) 
+2023-02-11T11:30:36.074071081: [Error] Invalid order 
+2023-02-11T11:30:36.074177796: [Error] Invalid orders input: Z (of class java.lang.Character) 
+2023-02-11T11:31:39.333178612: [Error] Invalid limit input 
+2023-02-11T11:31:39.335317982: [Error] Given size is negative 
+2023-02-11T11:31:39.336466646: [Error] Invalid position input 
+2023-02-11T11:31:39.336971864: [Error] Invalid number for position 
+2023-02-11T11:31:39.337470119: [Error] Given position is out of the limit 
+2023-02-11T11:31:39.337906171: [Error] Given position is out of the limit 
+2023-02-11T11:31:39.338329965: [Error] Given direction is not valid 
+2023-02-11T11:31:39.339797680: [Error] Invalid order for V 
+2023-02-11T11:31:39.340248980: [Error] Invalid orders input: Z (of class java.lang.Character) 
+2023-02-11T11:31:39.340654031: [Error] Invalid order for   
+2023-02-11T11:31:39.340762290: [Error] Invalid orders input: Z (of class java.lang.Character) 
